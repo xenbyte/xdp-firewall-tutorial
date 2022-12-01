@@ -25,10 +25,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("LoadELF() failed: %s", err)
 	}
-	matches := bpf.GetMapByName("matches")
-	if matches == nil {
-		log.Fatalf("eBPF map 'matches' not found\n")
-	}
 	blacklist := bpf.GetMapByName("blacklist")
 	if blacklist == nil {
 		log.Fatalf("eBPF map 'blacklist' not found\n")
