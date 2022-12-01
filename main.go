@@ -16,12 +16,12 @@ func main() {
 	// IP BlockList
 	// Add the IPs you want to be blocked
 	ipList := []string{
-		"8.8.8.8",
+		"12.12.11.32",
 	}
 
 	// Load XDP Into App
 	bpf := goebpf.NewDefaultEbpfSystem()
-	err := bpf.LoadElf("bpf/xdp_drop.elf")
+	err := bpf.LoadElf("bpf/xdp.elf")
 	if err != nil {
 		log.Fatalf("LoadELF() failed: %s", err)
 	}
@@ -56,7 +56,6 @@ func main() {
 // The Function That adds the IPs to the blacklist map
 func BlockIPAddress(ipAddreses []string, blacklist goebpf.Map) error {
 	for index, ip := range ipAddreses {
-		fmt.Printf("\t%s\n", ip)
 		err := blacklist.Insert(goebpf.CreateLPMtrieKey(ip), index)
 		if err != nil {
 			return err
